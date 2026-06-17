@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    background-color: #0E1117;
+    color: #FAFAFA;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+/* ── Dash 4 slider (Radix UI) ─────────────────────────────────────── */
+
+.dash-slider-track {
+    background-color: #2D3547 !important;
+    height: 4px !important;
+    border-radius: 2px !important;
+}
+
+.dash-slider-range {
+    background-color: #FF4B4B !important;
+    border-radius: 2px !important;
+}
+
+.dash-slider-thumb {
+    width: 18px !important;
+    height: 18px !important;
+    background-color: #FF4B4B !important;
+    border: 2px solid #FF4B4B !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 0 3px rgba(255, 75, 75, 0.25) !important;
+    cursor: pointer !important;
+}
+
+.dash-slider-thumb:focus,
+.dash-slider-thumb:hover {
+    box-shadow: 0 0 0 5px rgba(255, 75, 75, 0.35) !important;
+    outline: none !important;
+}
+
+/* tooltip shown while dragging */
+.dash-slider-tooltip {
+    background-color: #1C2333 !important;
+    border: 1px solid #2D3547 !important;
+    color: #FAFAFA !important;
+    border-radius: 4px !important;
+    padding: 2px 8px !important;
+    font-size: 12px !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* mark labels */
+.dash-slider-mark {
+    color: #8B8FA8 !important;
+    font-size: 11px !important;
+    margin-top: 6px !important;
+}
+
+/* ── number input box next to slider ──────────────────────────────── */
+
+.dash-input-container.dash-range-slider-input {
+    background-color: #1C2333 !important;
+    border: 1px solid #2D3547 !important;
+    color: #FAFAFA !important;
+    border-radius: 6px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    padding: 4px 8px !important;
+}
+
+.dash-input-container.dash-range-slider-input:focus {
+    border-color: #FF4B4B !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(255, 75, 75, 0.25) !important;
+}
