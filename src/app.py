@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 from amm import get_amount_out, get_swap_details
 from reader import get_reserves
 
-# --- theme -----------------------------------------------------------
+# // theme ///
 BG       = "#0E1117"
 SURFACE  = "#1C2333"
 BORDER   = "#2D3547"
@@ -22,20 +22,10 @@ except Exception:
     _default_weth = 4781
     _default_usdc = 8577724
 
-# --- helpers ---------------------------------------------------------
+# ///helpers ///
 
 def metric_card(label: str, value: str, delta: str = "", delta_color: str = GREEN) -> html.Div:
-    """Render a single Streamlit-style metric card.
-
-    Args:
-        label:       Card title shown in muted text above the value.
-        value:       Main metric value displayed prominently.
-        delta:       Optional secondary line below the value (e.g. change or unit).
-        delta_color: CSS color for the delta text.
-
-    Returns:
-        A styled html.Div component ready to embed in the layout.
-    """
+    """This renders a metric card."""
     children = [
         html.P(label, style={"color": SUBTEXT, "fontSize": "12px", "margin": "0 0 4px"}),
         html.H3(value, style={"color": TEXT, "margin": "0", "fontSize": "22px", "fontWeight": "600"}),
@@ -67,20 +57,20 @@ def slider_section(label: str, slider: dcc.Slider) -> html.Div:
     ], style={"marginBottom": "28px"})
 
 
-# --- layout ----------------------------------------------------------
+# /// layout ///
 
 app = dash.Dash(__name__, title="AMM Calculator")
+# Flask WSGI 
+server = app.server
 
 app.layout = html.Div([
 
-    # header
     html.Div([
         html.H1("AMM Calculator", style={"margin": "0", "fontSize": "28px", "fontWeight": "700"}),
         html.P("Uniswap V2 · WETH / USDC · Ethereum Mainnet",
-               style={"color": SUBTEXT, "margin": "4px 0 0", "fontSize": "14px"}),
+            style={"color": SUBTEXT, "margin": "4px 0 0", "fontSize": "14px"}),
     ], style={"marginBottom": "32px"}),
 
-    # controls panel
     html.Div([
         slider_section("Amount In (ETH)", dcc.Slider(
             min=1, max=int(_default_weth * 0.8), step=1,
@@ -125,7 +115,7 @@ app.layout = html.Div([
 ], style={"maxWidth": "1000px", "margin": "0 auto", "padding": "40px 24px", "backgroundColor": BG})
 
 
-# --- callbacks -------------------------------------------------------
+# /// callbacks ///
 
 @app.callback(
     Output("amount-in", "max"),
@@ -233,7 +223,3 @@ def update(amount_in: float, reserve_in: float, reserve_out: float):
     )
 
     return cards, k_bar, fig
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

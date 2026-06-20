@@ -84,7 +84,7 @@ def get_swap_details(amount_in: float, reserve_in: float, reserve_out: float) ->
 
 
 def get_swap_formated(amount_in: float, reserve_in: float, reserve_out: float,
-                      token_in: str, token_out: str) -> str:
+                    token_in: str, token_out: str) -> str:
     """Format full swap details as a human-readable multi-line string.
 
     Intended for CLI output or the stats panel in the Dash app.

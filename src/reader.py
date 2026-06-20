@@ -1,8 +1,12 @@
 
+import os
+
 from web3 import Web3
 
-# Prefer HTTPS over WebSocket (wss://) — Web3.HTTPProvider only, no extra deps
-RPC_URL = "https://eth.blockrazor.xyz"
+# Prefer HTTPS over WebSocket (wss://) — Web3.HTTPProvider only, no extra deps.
+# Override via the RPC_URL env var (e.g. a dedicated provider) in production;
+# falls back to a public endpoint for local/dev use.
+RPC_URL = os.environ.get("RPC_URL", "https://eth.blockrazor.xyz")
 
 # Uniswap V2 WETH/USDC pair on Ethereum mainnet
 # token0 = USDC (0xA0b8...), token1 = WETH (0xC02a...)
@@ -29,19 +33,6 @@ def get_reserves() -> dict:
     contract, and converts raw uint112 values to human-readable floats:
         - USDC has 6 decimals  → divide reserve0 by 10**6
         - WETH has 18 decimals → divide reserve1 by 10**18
-
-    Web3.to_checksum_address() is required — web3.py rejects plain lowercase addresses.
-
-    Returns:
-        dict with keys:
-            usdc (float):           USDC reserve in human units.
-            weth (float):           WETH reserve in human units.
-            price_eth_usdc (float): Implied ETH price in USDC (usdc / weth).
-            token0 (str):           Checksummed address of token0 (USDC).
-            token1 (str):           Checksummed address of token1 (WETH).
-
-    Raises:
-        ConnectionError: If the RPC call fails or the node is unreachable.
     """
     w3 = Web3(Web3.HTTPProvider(RPC_URL))
     contract = w3.eth.contract(
