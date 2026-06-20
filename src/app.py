@@ -112,6 +112,20 @@ app.layout = html.Div([
     # chart
     dcc.Graph(id="price-impact-graph", config={"displayModeBar": False}),
 
+    # footer credit
+    html.Div([
+        "Made by ",
+        html.A("Sh4dex", href="https://github.com/sh4dex", target="_blank",
+               style={"color": ACCENT, "textDecoration": "none", "fontWeight": "600"}),
+    ], style={
+        "textAlign": "center",
+        "color": SUBTEXT,
+        "fontSize": "13px",
+        "marginTop": "32px",
+        "paddingTop": "20px",
+        "borderTop": f"1px solid {BORDER}",
+    }),
+
 ], style={"maxWidth": "1000px", "margin": "0 auto", "padding": "40px 24px", "backgroundColor": BG})
 
 

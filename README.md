@@ -6,6 +6,8 @@
 ![Dash](https://img.shields.io/badge/dash-interactive-orange.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
+**🚀 Live demo:** [ammcalculator-production.up.railway.app](https://ammcalculator-production.up.railway.app)
+
 ## What it does
 
 - 🔗 Pulls live reserves from Ethereum mainnet via RPC
@@ -19,7 +21,8 @@
 src/
 ├── amm.py      # Pure math — Uniswap V2 formula, no blockchain dependency
 ├── reader.py   # Reads live reserves from Ethereum via web3.py
-└── app.py      # Dash interactive UI
+├── app.py      # Dash interactive UI
+└── main.py     # Entry point — exposes the WSGI `server` for gunicorn
 ```
 ## Setup
 
@@ -33,10 +36,32 @@ pip install -r requirements.txt
 
 ```bash
 cd src
-python app.py
+python main.py
 ```
 
 Open **http://127.0.0.1:8050** in your browser.
+
+### Configuration
+
+| Env var | Default | Description |
+|---|---|---|
+| `PORT` | `8050` | Port the app listens on. Set automatically by Railway. |
+| `RPC_URL` | `https://eth.blockrazor.xyz` | Ethereum HTTP RPC endpoint used to read live reserves. Override with a dedicated provider (Alchemy, Infura, …) for reliability. |
+
+If the RPC endpoint is unreachable at startup, the app falls back to sensible default reserves so it still boots.
+
+## Deployment (Railway)
+
+The repo is deploy-ready for [Railway](https://railway.app):
+
+- **`requirements.txt`** — pinned dependencies, including `gunicorn`.
+- **`Procfile` / `railway.json`** — start command served by gunicorn:
+  ```
+  gunicorn --chdir src main:server --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+  ```
+- **`.python-version`** — pins Python 3.12 for the build.
+
+To deploy: connect the GitHub repo in Railway, then **Settings → Networking → Generate Domain** to expose the public URL. Set `RPC_URL` under **Variables** if you want a dedicated node.
 
 ## How to use
 
